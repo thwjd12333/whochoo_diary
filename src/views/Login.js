@@ -2,13 +2,17 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const navigate = useNavigate()
-  const onclick = () => {
+  const onJoin = () => {
+    navigate('/join')
+  }
+  const onLogin = () => {
     navigate('/m')
   }
 
   return (
     <>
-      <div onClick={onclick}>Login</div>
+      <div onClick={onJoin}>회원가입</div>
+      <div onClick={onLogin}>로그인</div>
     </>
   )
 }
