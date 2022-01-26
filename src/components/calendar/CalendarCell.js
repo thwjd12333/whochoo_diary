@@ -1,6 +1,7 @@
 import React from 'react'
+import moment from 'moment'
 
-const CalendarCell = ({ num, ended, today }) => {
+const CalendarCell = ({ ended, today, date }) => {
   const styles = {
     outer: {
       position: 'relative',
@@ -24,7 +25,7 @@ const CalendarCell = ({ num, ended, today }) => {
   return (
     <>
       <div style={styles.outer}>
-        {num}
+        {moment(date).format('D')}
         <div style={styles.inner}>A</div>
       </div>
     </>

@@ -5,21 +5,24 @@ import moment from 'moment'
 const ONEDAY = 1000 * 60 * 60 * 24
 
 const CalendarRow = ({ date, week }) => {
-  const firstDate = new Date(date)
-  firstDate.setDate(1)
+  const [weekFirstDate, setWeekFirstDate] = useState(null)
 
-  let weekDate = new Date(firstDate.getTime() + ONEDAY * 7 * (week - 1))
-  const weekDay = weekDate.getDay()
+  useEffect(() => {
+    const firstDate = new Date(date)
+    firstDate.setDate(1)
 
-  const [weekFirstDate] = useState(
-    new Date(weekDate.getTime() - ONEDAY * weekDay),
-  )
+    let weekDate = new Date(firstDate.getTime() + ONEDAY * 7 * (week - 1))
+    const weekDay = weekDate.getDay()
+    setWeekFirstDate(new Date(weekDate.getTime() - ONEDAY * weekDay))
+  }, [date, week])
 
   const getDate = plusDate => {
-    return new Date(weekFirstDate.getTime() + plusDate * ONEDAY).getDate()
+    if (!weekFirstDate) return 1
+    return new Date(weekFirstDate.getTime() + plusDate * ONEDAY)
   }
 
   const isToday = plusDate => {
+    if (!weekFirstDate) return false
     const format = 'YYYYMMDD'
     const today = moment(new Date()).format(format)
     const thisDate = moment(
@@ -36,13 +39,13 @@ const CalendarRow = ({ date, week }) => {
   }
   return (
     <div style={styles}>
-      <CalendarCell num={getDate(0)} today={isToday(0)} />
-      <CalendarCell num={getDate(1)} today={isToday(1)} />
-      <CalendarCell num={getDate(2)} today={isToday(2)} />
-      <CalendarCell num={getDate(3)} today={isToday(3)} />
-      <CalendarCell num={getDate(4)} today={isToday(4)} />
-      <CalendarCell num={getDate(5)} today={isToday(5)} />
-      <CalendarCell num={getDate(6)} today={isToday(6)} ended="true" />
+      <CalendarCell date={getDate(0)} today={isToday(0)} />
+      <CalendarCell date={getDate(1)} today={isToday(1)} />
+      <CalendarCell date={getDate(2)} today={isToday(2)} />
+      <CalendarCell date={getDate(3)} today={isToday(3)} />
+      <CalendarCell date={getDate(4)} today={isToday(4)} />
+      <CalendarCell date={getDate(5)} today={isToday(5)} />
+      <CalendarCell date={getDate(6)} today={isToday(6)} ended="true" />
     </div>
   )
 }
