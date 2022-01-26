@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-const Login = () => {
+const Login = ({ user }) => {
   const navigate = useNavigate()
-  const onJoin = () => {
-    navigate('/join')
-  }
-  const onLogin = () => {
-    navigate('/m')
-  }
+
+  useEffect(() => {
+    if (user) {
+      console.log('-------------')
+      console.log(user)
+      console.log('-------------')
+      navigate('/m')
+    }
+  }, [])
 
   return (
     <>
-      <div onClick={onJoin}>회원가입</div>
-      <div onClick={onLogin}>로그인</div>
+      <div onClick={() => navigate('/join')}>회원가입</div>
+      <div onClick={() => navigate('/m')}>로그인</div>
     </>
   )
 }
