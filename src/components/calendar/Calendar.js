@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import CalendarHeader from './CalendarHeader'
 import CalendarRow from './CalendarRow'
 import moment from 'moment'
-import { cb } from '../../common/Utils'
+import { cb, commaNum, dFormat, randomNum } from '../../common/Utils'
 import PropTypes from 'prop-types'
 
-const Calendar = ({ date = new Date() }) => {
+const Calendar = ({ date }) => {
   const [myDate, setMyDate] = useState(date)
 
   const styles = {
@@ -35,6 +35,9 @@ const Calendar = ({ date = new Date() }) => {
       </div>
     </>
   )
+}
+Calendar.defaultProps = {
+  date: new Date(),
 }
 Calendar.propTypes = {
   date: PropTypes.instanceOf(Date),

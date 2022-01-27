@@ -52,6 +52,9 @@ const CalendarRow = ({ date = new Date(), week }) => {
   )
 }
 
+CalendarRow.defaultProps = {
+  date: new Date(),
+}
 CalendarRow.propTypes = {
   date: PropTypes.instanceOf(Date),
   week: PropTypes.number.isRequired,

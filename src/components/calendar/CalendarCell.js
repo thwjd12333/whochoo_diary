@@ -33,6 +33,11 @@ const CalendarCell = ({ ended, today, date = new Date() }) => {
   )
 }
 
+CalendarCell.defaultProps = {
+  ended: false,
+  today: false,
+  date: new Date(),
+}
 CalendarCell.propTypes = {
   ended: PropTypes.bool,
   today: PropTypes.bool,
