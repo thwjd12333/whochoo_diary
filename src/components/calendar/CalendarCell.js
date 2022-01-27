@@ -1,7 +1,8 @@
 import React from 'react'
-import moment from 'moment'
+import PropTypes from 'prop-types'
+import { dFormat } from '../../common/Utils'
 
-const CalendarCell = ({ ended, today, date }) => {
+const CalendarCell = ({ ended, today, date = new Date() }) => {
   const styles = {
     outer: {
       position: 'relative',
@@ -25,10 +26,17 @@ const CalendarCell = ({ ended, today, date }) => {
   return (
     <>
       <div style={styles.outer}>
-        {moment(date).format('D')}
+        {dFormat(date, 'D')}
         <div style={styles.inner}>A</div>
       </div>
     </>
   )
 }
+
+CalendarCell.propTypes = {
+  ended: PropTypes.bool,
+  today: PropTypes.bool,
+  date: PropTypes.instanceOf(Date),
+}
+
 export default CalendarCell

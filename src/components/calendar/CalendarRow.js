@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CalendarCell from './CalendarCell'
-import moment from 'moment'
+import PropTypes from 'prop-types'
+import { dFormat } from '../../common/Utils'
 
 const ONEDAY = 1000 * 60 * 60 * 24
 
-const CalendarRow = ({ date, week }) => {
+const CalendarRow = ({ date = new Date(), week }) => {
   const [weekFirstDate, setWeekFirstDate] = useState(null)
 
   useEffect(() => {
@@ -17,17 +18,18 @@ const CalendarRow = ({ date, week }) => {
   }, [date, week])
 
   const getDate = plusDate => {
-    if (!weekFirstDate) return 1
+    if (!weekFirstDate) return new Date()
     return new Date(weekFirstDate.getTime() + plusDate * ONEDAY)
   }
 
   const isToday = plusDate => {
     if (!weekFirstDate) return false
     const format = 'YYYYMMDD'
-    const today = moment(new Date()).format(format)
-    const thisDate = moment(
+    const today = dFormat(new Date(), format)
+    const thisDate = dFormat(
       new Date(weekFirstDate.getTime() + plusDate * ONEDAY),
-    ).format(format)
+      format,
+    )
     return today === thisDate
   }
 
@@ -45,8 +47,13 @@ const CalendarRow = ({ date, week }) => {
       <CalendarCell date={getDate(3)} today={isToday(3)} />
       <CalendarCell date={getDate(4)} today={isToday(4)} />
       <CalendarCell date={getDate(5)} today={isToday(5)} />
-      <CalendarCell date={getDate(6)} today={isToday(6)} ended="true" />
+      <CalendarCell date={getDate(6)} today={isToday(6)} ended={true} />
     </div>
   )
+}
+
+CalendarRow.propTypes = {
+  date: PropTypes.instanceOf(Date),
+  week: PropTypes.number.isRequired,
 }
 export default CalendarRow

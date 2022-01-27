@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 const Join = ({ saveAll }) => {
   const [user, setUser] = useState({ id: '', pw: '', nickName: '' })
   const navigate = useNavigate()
@@ -44,6 +45,10 @@ const Join = ({ saveAll }) => {
       <div onClick={onclick}>Login</div>
     </>
   )
+}
+
+Join.propTypes = {
+  saveAll: PropTypes.func,
 }
 
 export default Join

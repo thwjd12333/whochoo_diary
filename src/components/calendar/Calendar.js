@@ -3,6 +3,7 @@ import CalendarHeader from './CalendarHeader'
 import CalendarRow from './CalendarRow'
 import moment from 'moment'
 import { cb } from '../../common/Utils'
+import PropTypes from 'prop-types'
 
 const Calendar = ({ date = new Date() }) => {
   const [myDate, setMyDate] = useState(date)
@@ -34,5 +35,8 @@ const Calendar = ({ date = new Date() }) => {
       </div>
     </>
   )
+}
+Calendar.propTypes = {
+  date: PropTypes.instanceOf(Date),
 }
 export default Calendar
