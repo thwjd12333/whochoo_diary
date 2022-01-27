@@ -2,13 +2,10 @@ import React, { useState } from 'react'
 import CalendarHeader from './CalendarHeader'
 import CalendarRow from './CalendarRow'
 import moment from 'moment'
+import { cb } from '../../common/Utils'
 
-const Calendar = ({ date }) => {
-  let curDate
-  if (date) curDate = date
-  else curDate = new Date()
-
-  const [myDate, setMyDate] = useState(curDate)
+const Calendar = ({ date = new Date() }) => {
+  const [myDate, setMyDate] = useState(date)
 
   const styles = {
     border: '1px solid black',
@@ -20,17 +17,13 @@ const Calendar = ({ date }) => {
     setMyDate(temp.toDate())
   }
 
-  const onNext = () => {
-    setMonth(1)
-  }
-
-  const onPrev = () => {
-    setMonth(-1)
-  }
-
   return (
     <>
-      <CalendarHeader date={myDate} onNext={onNext} onPrev={onPrev} />
+      <CalendarHeader
+        date={myDate}
+        onNext={cb(setMonth, 1)}
+        onPrev={cb(setMonth, -1)}
+      />
       <div style={styles}>
         <CalendarRow date={myDate} week={1} />
         <CalendarRow date={myDate} week={2} />

@@ -11,7 +11,6 @@ const Main = () => {
   // const navigate = useNavigate()
   // console.log(new Date().getTime())
   const onTileContents = param => {
-    console.log(param)
     return <div>1</div>
   }
 
