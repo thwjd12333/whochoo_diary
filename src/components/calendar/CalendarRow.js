@@ -5,7 +5,7 @@ import { dFormat } from '../../common/Utils'
 
 const ONEDAY = 1000 * 60 * 60 * 24
 
-const CalendarRow = ({ date = new Date(), week }) => {
+const CalendarRow = ({ date, week }) => {
   const [weekFirstDate, setWeekFirstDate] = useState(null)
 
   useEffect(() => {
@@ -41,13 +41,17 @@ const CalendarRow = ({ date = new Date(), week }) => {
   }
   return (
     <div style={styles}>
-      <CalendarCell date={getDate(0)} today={isToday(0)} />
-      <CalendarCell date={getDate(1)} today={isToday(1)} />
-      <CalendarCell date={getDate(2)} today={isToday(2)} />
-      <CalendarCell date={getDate(3)} today={isToday(3)} />
-      <CalendarCell date={getDate(4)} today={isToday(4)} />
-      <CalendarCell date={getDate(5)} today={isToday(5)} />
-      <CalendarCell date={getDate(6)} today={isToday(6)} ended={true} />
+      {[...Array(7).keys()].map(idx => {
+        return (
+          <CalendarCell
+            isThisMonth={getDate(idx).getMonth() === date.getMonth()}
+            thisDate={getDate(idx)}
+            today={isToday(idx)}
+            key={idx}
+            ended={idx === 6}
+          />
+        )
+      })}
     </div>
   )
 }

@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CalendarHeader from './CalendarHeader'
 import CalendarRow from './CalendarRow'
 import moment from 'moment'
-import { cb, commaNum, dFormat, randomNum } from '../../common/Utils'
+import { cb, getWeek } from '../../common/Utils'
 import PropTypes from 'prop-types'
 
 const Calendar = ({ date }) => {
   const [myDate, setMyDate] = useState(date)
+  const [weekCount, setWeekCount] = useState(0)
 
   const styles = {
     border: '1px solid black',
@@ -18,6 +19,10 @@ const Calendar = ({ date }) => {
     setMyDate(temp.toDate())
   }
 
+  useEffect(() => {
+    setWeekCount(getWeek(myDate))
+  }, [myDate])
+
   return (
     <>
       <CalendarHeader
@@ -26,12 +31,9 @@ const Calendar = ({ date }) => {
         onPrev={cb(setMonth, -1)}
       />
       <div style={styles}>
-        <CalendarRow date={myDate} week={1} />
-        <CalendarRow date={myDate} week={2} />
-        <CalendarRow date={myDate} week={3} />
-        <CalendarRow date={myDate} week={4} />
-        <CalendarRow date={myDate} week={5} />
-        <CalendarRow date={myDate} week={6} />
+        {[...Array(weekCount).keys()].map(idx => (
+          <CalendarRow date={myDate} week={idx + 1} key={idx} />
+        ))}
       </div>
     </>
   )

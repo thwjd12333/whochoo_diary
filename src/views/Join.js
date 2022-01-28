@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
-const Join = ({ saveAll }) => {
+import { useDispatch } from 'react-redux'
+const Join = () => {
   const [user, setUser] = useState({ id: '', pw: '', nickName: '' })
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const onclick = () => {
     window.console.log(user)
-    saveAll(user)
+    dispatch({ type: 'ACTION_SAVE_ALL', value: user })
     navigate('/m')
   }
 

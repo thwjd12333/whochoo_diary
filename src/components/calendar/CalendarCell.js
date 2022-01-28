@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { dFormat } from '../../common/Utils'
 
-const CalendarCell = ({ ended, today, date = new Date() }) => {
+const CalendarCell = ({ ended, today, thisDate, isThisMonth }) => {
   const styles = {
     outer: {
       position: 'relative',
@@ -22,11 +22,13 @@ const CalendarCell = ({ ended, today, date = new Date() }) => {
     },
   }
   if (ended) styles.outer.borderRight = ''
+  if (!isThisMonth) styles.outer.backgroundColor = 'gray'
   if (today) styles.outer.backgroundColor = 'green'
+
   return (
     <>
       <div style={styles.outer}>
-        {dFormat(date, 'D')}
+        {dFormat(thisDate, 'D')}
         <div style={styles.inner}>A</div>
       </div>
     </>
@@ -36,12 +38,14 @@ const CalendarCell = ({ ended, today, date = new Date() }) => {
 CalendarCell.defaultProps = {
   ended: false,
   today: false,
-  date: new Date(),
+  thisDate: new Date(),
+  isThisMonth: true,
 }
 CalendarCell.propTypes = {
   ended: PropTypes.bool,
   today: PropTypes.bool,
-  date: PropTypes.instanceOf(Date),
+  thisDate: PropTypes.instanceOf(Date),
+  isThisMonth: PropTypes.bool,
 }
 
 export default CalendarCell

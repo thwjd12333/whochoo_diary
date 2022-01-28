@@ -25,6 +25,19 @@ const dFormat = (date = new Date(), formatStr = 'YYYY.MM.DD') =>
   moment(date).format(formatStr)
 
 /**
+ * 해당날짜가 몇 주 인지를 구한다.
+ *
+ * @param pDate
+ * @param dowOffset
+ * @returns {number}
+ */
+const getWeek = pDate => {
+  const firstDate = new Date(pDate.getFullYear(), pDate.getMonth(), 1)
+  const lastDate = new Date(pDate.getFullYear(), pDate.getMonth() + 1, 0)
+  return Math.floor((firstDate.getDay() + lastDate.getDate() - 1) / 7) + 1
+}
+
+/**
  * min, max 사이의 랜덤함수를 반환한다.
  *
  * @default max = 1, min = 0
@@ -69,6 +82,7 @@ const currencyNum = (num = 0) =>
 export {
   cb,
   dFormat,
+  getWeek,
   randomNum,
   noDupArray,
   shuffleArray,

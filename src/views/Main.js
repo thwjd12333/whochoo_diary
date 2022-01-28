@@ -5,10 +5,8 @@ import MyCalendar from '../components/calendar/Calendar'
 import { dFormat } from '../common/Utils'
 
 const Main = () => {
+  console.log('main render')
   const [value, onChange] = useState(new Date())
-  const onTileContents = param => {
-    return <div>1</div>
-  }
 
   return (
     <>
@@ -17,7 +15,6 @@ const Main = () => {
         value={value}
         calendarType="US"
         formatDay={(_, d) => dFormat(d, 'D')}
-        tileContent={onTileContents}
       />
       <MyCalendar />
     </>

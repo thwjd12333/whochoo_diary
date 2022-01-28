@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
-const Login = ({ user }) => {
+const Login = () => {
   const navigate = useNavigate()
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
-    if (user) {
+    if (user.id) {
       console.log('-------------')
-      console.log(user)
+      console.log(user.id)
       console.log('-------------')
       navigate('/m')
     }
-  }, [])
+  })
 
   return (
     <>
