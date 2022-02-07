@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
-import Calendar from 'react-calendar'
+import React from 'react'
 import 'react-calendar/dist/Calendar.css'
 import MyCalendar from '../components/calendar/Calendar'
-import { dFormat } from '../common/Utils'
+import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
-  console.log('main render')
-  const [value, onChange] = useState(new Date())
-
+  const navigator = useNavigate()
+  const openEmotion = d => {
+    // 1. 쿼리 asadf/afsd?date=b&emotion=2
+    // 2. 패스 asadf/b
+    // 3. 안보이는 쿼리 asadf {date: b}
+    navigator(`/emotion?date=${d.getTime()}`)
+  }
+  const clickPlus = () => {
+    openEmotion()
+  }
   return (
     <>
-      <Calendar
-        onChange={onChange}
-        value={value}
-        calendarType="US"
-        formatDay={(_, d) => dFormat(d, 'D')}
-      />
-      <MyCalendar />
+      <MyCalendar onSelected={openEmotion} />
+      <div>
+        <button onClick={clickPlus}>+</button>
+      </div>
     </>
   )
 }

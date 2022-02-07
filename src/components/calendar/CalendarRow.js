@@ -5,7 +5,7 @@ import { dFormat } from '../../common/Utils'
 
 const ONEDAY = 1000 * 60 * 60 * 24
 
-const CalendarRow = ({ date, week }) => {
+const CalendarRow = ({ date, week, onSelected }) => {
   const [weekFirstDate, setWeekFirstDate] = useState(null)
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const CalendarRow = ({ date, week }) => {
       {[...Array(7).keys()].map(idx => {
         return (
           <CalendarCell
+            onClick={onSelected}
             isThisMonth={getDate(idx).getMonth() === date.getMonth()}
             thisDate={getDate(idx)}
             today={isToday(idx)}
