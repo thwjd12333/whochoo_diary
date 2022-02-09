@@ -1,13 +1,19 @@
 import React, { useState } from 'react'
 import Modal from '../components/Modal'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { dFormat } from '../common/Utils'
 
 const Emotion = () => {
   const navigator = useNavigate()
   const [searchParams] = useSearchParams()
-  const selectedDate = new Date(Number(searchParams.get('date')))
 
-  const [visible, setVisible] = useState(selectedDate === 'undefined')
+  const [selectedDate, setSelectedDate] = useState(
+    searchParams.get('date')
+      ? new Date(Number(searchParams.get('date')))
+      : null,
+  )
+
+  const [visible, setVisible] = useState(!selectedDate)
 
   const selectEmotion = eCode => {
     navigator(`/write?date=${selectedDate.getTime()}&emotion=${eCode}`)
@@ -33,7 +39,29 @@ const Emotion = () => {
         onClose={() => {
           setVisible(false)
         }}
-      />
+      >
+        <div>
+          {[...Array(5).keys()]
+            .map(idx => {
+              const now = new Date()
+              const targetDate = new Date(
+                now.getTime() - 1000 * 60 * 60 * 24 * idx,
+              )
+              return (
+                // <button onclick={temp())}}>
+                <button
+                  onClick={() => {
+                    setVisible(false)
+                    setSelectedDate(targetDate)
+                  }}
+                >
+                  {dFormat(targetDate, 'M.D')}
+                </button>
+              )
+            })
+            .reverse()}
+        </div>
+      </Modal>
     </>
   )
 }

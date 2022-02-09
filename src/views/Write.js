@@ -1,11 +1,16 @@
-import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { dFormat } from '../common/Utils'
 
 const Write = () => {
+  const [content, setContent] = useState('')
   const [searchParams] = useSearchParams()
   const selectedDate = new Date(Number(searchParams.get('date')))
   const selectedEmotion = searchParams.get('emotion')
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+  const navigator = useNavigate()
 
   const getEmotion = code => {
     switch (parseInt(code)) {
@@ -27,7 +32,20 @@ const Write = () => {
         return '분노3'
       case 9:
         return '슬픔3'
+      default:
+        return ''
     }
+  }
+
+  const onSave = () => {
+    const target = {
+      emotion: selectedEmotion,
+      content,
+      date: selectedDate,
+      userId: user.id,
+    }
+    dispatch({ type: 'ACTION_ADD_LOG', value: target })
+    navigator('/m')
   }
 
   return (
@@ -35,9 +53,9 @@ const Write = () => {
       <div>{dFormat(selectedDate, 'YYYY년 M월 D일')}</div>
       <div>{getEmotion(selectedEmotion)}</div>
       <hr />
-      <textarea />
+      <textarea value={content} onChange={e => setContent(e.target.value)} />
       <div>
-        <button>저장</button>
+        <button onClick={onSave}>저장</button>
       </div>
     </div>
   )

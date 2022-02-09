@@ -2,7 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { dFormat } from '../../common/Utils'
 
-const CalendarCell = ({ ended, today, thisDate, isThisMonth, onClick }) => {
+const CalendarCell = ({
+  ended,
+  today,
+  thisDate,
+  isThisMonth,
+  onClick,
+  children,
+}) => {
   const styles = {
     outer: {
       position: 'relative',
@@ -38,7 +45,7 @@ const CalendarCell = ({ ended, today, thisDate, isThisMonth, onClick }) => {
   return (
     <>
       <div style={styles.outer} onClick={onThisClick}>
-        <div style={styles.inner}>A</div>
+        <div style={styles.inner}>{children}</div>
         <span style={styles.number}>{dFormat(thisDate, 'D')}</span>
       </div>
     </>

@@ -5,7 +5,7 @@ import moment from 'moment'
 import { cb, getWeek } from '../../common/Utils'
 import PropTypes from 'prop-types'
 
-const Calendar = ({ date, onSelected }) => {
+const Calendar = ({ date, onSelected, children }) => {
   const [myDate, setMyDate] = useState(date)
   const [weekCount, setWeekCount] = useState(0)
 
@@ -37,7 +37,9 @@ const Calendar = ({ date, onSelected }) => {
             date={myDate}
             week={idx + 1}
             key={idx}
-          />
+          >
+            {children}
+          </CalendarRow>
         ))}
       </div>
     </>
