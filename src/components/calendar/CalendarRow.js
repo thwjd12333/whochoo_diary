@@ -5,7 +5,7 @@ import { dFormat } from '../../common/Utils'
 
 const ONEDAY = 1000 * 60 * 60 * 24
 
-const CalendarRow = ({ date, week, onSelected, children }) => {
+const CalendarRow = ({ date, week, onSelected, csCell }) => {
   const [weekFirstDate, setWeekFirstDate] = useState(null)
 
   useEffect(() => {
@@ -50,9 +50,8 @@ const CalendarRow = ({ date, week, onSelected, children }) => {
             today={isToday(idx)}
             key={idx}
             ended={idx === 6}
-          >
-            {children}
-          </CalendarCell>
+            csCell={csCell}
+          />
         )
       })}
     </div>

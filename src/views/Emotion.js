@@ -50,6 +50,7 @@ const Emotion = () => {
               return (
                 // <button onclick={temp())}}>
                 <button
+                  key={idx}
                   onClick={() => {
                     setVisible(false)
                     setSelectedDate(targetDate)

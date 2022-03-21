@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import CalendarHeader from './CalendarHeader'
 import CalendarRow from './CalendarRow'
 import moment from 'moment'
-import { cb, getWeek } from '../../common/Utils'
+import { getWeek } from '../../common/Utils'
 import PropTypes from 'prop-types'
 
-const Calendar = ({ date, onSelected, children }) => {
+const Calendar = ({ date, onSelected, onChangeMonth, csCell }) => {
   const [myDate, setMyDate] = useState(date)
   const [weekCount, setWeekCount] = useState(0)
 
@@ -17,18 +17,20 @@ const Calendar = ({ date, onSelected, children }) => {
     const temp = moment(myDate)
     temp.month(temp.month() + num)
     setMyDate(temp.toDate())
+    onChangeMonth(temp.toDate())
   }
 
   useEffect(() => {
+    onChangeMonth(date)
     setWeekCount(getWeek(myDate))
-  }, [myDate])
+  }, [myDate, onChangeMonth, setWeekCount, date])
 
   return (
     <>
       <CalendarHeader
         date={myDate}
-        onNext={cb(setMonth, 1)}
-        onPrev={cb(setMonth, -1)}
+        onNext={() => setMonth(1)}
+        onPrev={() => setMonth(-1)}
       />
       <div style={styles}>
         {[...Array(weekCount).keys()].map(idx => (
@@ -37,9 +39,8 @@ const Calendar = ({ date, onSelected, children }) => {
             date={myDate}
             week={idx + 1}
             key={idx}
-          >
-            {children}
-          </CalendarRow>
+            csCell={csCell}
+          />
         ))}
       </div>
     </>

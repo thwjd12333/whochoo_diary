@@ -8,7 +8,7 @@ const CalendarCell = ({
   thisDate,
   isThisMonth,
   onClick,
-  children,
+  csCell,
 }) => {
   const styles = {
     outer: {
@@ -45,7 +45,7 @@ const CalendarCell = ({
   return (
     <>
       <div style={styles.outer} onClick={onThisClick}>
-        <div style={styles.inner}>{children}</div>
+        <div style={styles.inner}>{csCell(thisDate)}</div>
         <span style={styles.number}>{dFormat(thisDate, 'D')}</span>
       </div>
     </>
